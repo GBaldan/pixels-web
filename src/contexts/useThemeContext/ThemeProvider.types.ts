@@ -1,8 +1,8 @@
-export type ITheme = 'light' | 'dark' | 'system'
+export type IThemeMode = 'light' | 'dark' | 'system'
 
 export type IThemeContextData = {
-  theme: ITheme
-  resolvedTheme: Exclude<ITheme, 'system'>
+  theme: IThemeMode
+  resolvedTheme: Exclude<IThemeMode, 'system'>
   toggleTheme: () => void
-  setTheme: (theme: ITheme) => void
+  setTheme: (theme: IThemeMode) => void
 }

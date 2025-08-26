@@ -19,24 +19,24 @@ import {
 } from './ThemeProvider.utils'
 
 // Types
-import type { ITheme, IThemeContextData } from './ThemeProvider.types'
+import type { IThemeMode, IThemeContextData } from './ThemeProvider.types'
 
 const ThemeContext = createContext<IThemeContextData | null>(null)
 
 const ThemeContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   // States
-  const [theme, setThemeState] = useState<ITheme>('system')
+  const [theme, setThemeState] = useState<IThemeMode>('system')
   const [resolvedTheme, setResolvedTheme] = useState(getSystemTheme)
 
   // Functions
-  const setTheme = useCallback((newTheme: ITheme) => {
+  const setTheme = useCallback((newTheme: IThemeMode) => {
     localStorage.setItem(THEME_STORAGE_KEY, newTheme)
     setThemeState(newTheme)
 
     const final =
       newTheme === 'system'
         ? getSystemTheme()
-        : (newTheme as Exclude<ITheme, 'system'>)
+        : (newTheme as Exclude<IThemeMode, 'system'>)
 
     applyThemeClass(final)
     setResolvedTheme(final)
@@ -50,8 +50,8 @@ const ThemeContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, [theme, setTheme])
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem(THEME_STORAGE_KEY) as ITheme | null
-    const initial = storedTheme ?? 'system'
+    const stored = localStorage.getItem(THEME_STORAGE_KEY) as IThemeMode | null
+    const initial = stored ?? 'system'
 
     setTheme(initial)
   }, [setTheme])
