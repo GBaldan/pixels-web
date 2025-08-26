@@ -1,6 +1,6 @@
-import type { ITheme } from './ThemeProvider.types'
+import type { IThemeMode } from './ThemeProvider.types'
 
-export function getSystemTheme(): Exclude<ITheme, 'system'> {
+export function resolveSystemTheme(): Exclude<IThemeMode, 'system'> {
   if (typeof window === 'undefined') return 'light'
 
   return window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -8,7 +8,7 @@ export function getSystemTheme(): Exclude<ITheme, 'system'> {
     : 'light'
 }
 
-export function applyThemeClass(theme: Exclude<ITheme, 'system'>): void {
+export function applyThemeClass(theme: Exclude<IThemeMode, 'system'>): void {
   const root = document.documentElement
   root.classList.remove('light', 'dark')
   root.classList.add(theme)

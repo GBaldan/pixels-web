@@ -13,9 +13,9 @@ import {
 
 // Utils
 import {
-  getSystemTheme,
   applyThemeClass,
-  THEME_STORAGE_KEY
+  THEME_STORAGE_KEY,
+  resolveSystemTheme
 } from './ThemeProvider.utils'
 
 // Types
@@ -26,7 +26,7 @@ const ThemeContext = createContext<IThemeContextData | null>(null)
 const ThemeContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   // States
   const [theme, setThemeState] = useState<IThemeMode>('system')
-  const [resolvedTheme, setResolvedTheme] = useState(getSystemTheme)
+  const [resolvedTheme, setResolvedTheme] = useState(resolveSystemTheme)
 
   // Functions
   const setTheme = useCallback((newTheme: IThemeMode) => {
@@ -35,7 +35,7 @@ const ThemeContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
     const final =
       newTheme === 'system'
-        ? getSystemTheme()
+        ? resolveSystemTheme()
         : (newTheme as Exclude<IThemeMode, 'system'>)
 
     applyThemeClass(final)
